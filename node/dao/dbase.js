@@ -30,7 +30,6 @@ class xiaoye_db {
 	find(collectionName,json,args,callback){
 		this._connect((err,db)=>{
 			if(err) return console.log("数据库连接失败")
-			// console.log(arguments.length == 3 && typeof args == "function")
 			if(arguments.length == 3 && typeof args == "function"){
 				callback = args;
 				var skipAmount = 0;
@@ -41,9 +40,9 @@ class xiaoye_db {
 				var limitNumber = args.pageSize;
 				var sortObj = args.sort;
 			}
-			// console.log(`limit(${limitNumber}).skip(${skipAmount}).sort(${sortObj})`)
 			let dbase = db.db(this.databaseName)
 			dbase.collection(collectionName).find(json).limit(limitNumber).skip(skipAmount).sort(sortObj).toArray((err,result)=>{
+				// console.log(result)
 				callback&&callback(err,result)
 			})
 		})
