@@ -1,11 +1,18 @@
 import React from 'react';
-import {Link,HashRouter, Route} from 'react-router-dom'
+import {Switch,Link,HashRouter, Route} from 'react-router-dom'
 import Login from './component/login/login'
+import Regist from './component/login/regist'
+
 
 function App() {
   return (
     <HashRouter>
-      <Route path="/" component={Login}></Route>
+      <Switch>
+        {/* <Route path="/" to="/login"></Route> */}
+        <Route path="/regist" component={Regist}></Route>
+        <Route path="/login"  component={Login}></Route>
+      </Switch>
+      
 
     </HashRouter>
   );

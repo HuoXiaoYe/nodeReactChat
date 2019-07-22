@@ -17,7 +17,7 @@ class Login extends Component {
                     <Form.Item>
                         <Input
                             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="Username"
+                            placeholder="用户名"
                             ref="username"
                         />
                     </Form.Item>
@@ -25,7 +25,7 @@ class Login extends Component {
                         <Input
                             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                             type="password"
-                            placeholder="Password"
+                            placeholder="密码"
                             ref="password"
                         />
                     </Form.Item>
@@ -34,11 +34,11 @@ class Login extends Component {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" onClick={this.handleLogin} style={{ width: "100%" }} size="large" className="login-form-button">Log in </Button>
+                        <Button type="primary" htmlType="submit" onClick={this.handleLogin} style={{ width: "100%" }} size="large" className="login-form-button">登录</Button>
                     </Form.Item>
 
                     <Form.Item>
-                        <a style={{ float: "right", fontSize: "10px" }} className="regist-link" href="/regist">前去注册</a>
+                        <a style={{ float: "right", fontSize: "10px" }} className="regist-link" href="/#/regist">前去注册</a>
                     </Form.Item>
                 </div>
             </div>
@@ -53,6 +53,7 @@ class Login extends Component {
             let data = { username, password }
             axios.post('http://127.0.0.1:4000/login', data)
                 .then(function (response) {
+                    // -2 没有该用户 -1 密码错误 1 登录成功
                     console.log(response.data);
                 })
         }
