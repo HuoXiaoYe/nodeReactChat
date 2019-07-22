@@ -18,12 +18,12 @@ class xiaoye_db {
 			let dbase = db.db(this.databaseName);
 			if(!Array.isArray(json)){ // 添加一条数据
 				dbase.collection(collectionName).insertOne(json,(err,result)=>{
-					return callback&&callback()
+					return callback&&callback(err,result)
 				})
 			}
 			// 添加多条数据
 			dbase.collection(collectionName).insertMany(json,(err,result)=>{
-				return callback&&callback()
+				return callback&&callback(err,result)
 			})
 		})
 	}

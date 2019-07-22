@@ -18,5 +18,6 @@ app.use((req,res,next)=>{ // 设置跨域请求
 
 // 登录验证
 app.post("/login",router.doLogin)
+app.post("/regist",router.doRegist)
 
 app.listen(4000)

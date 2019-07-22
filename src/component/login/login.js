@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import './login.css'
 // import FormItem from 'antd/lib/form/FormItem';
 import axios from 'axios'
@@ -54,7 +54,15 @@ class Login extends Component {
             axios.post('http://127.0.0.1:4000/login', data)
                 .then(function (response) {
                     // -2 没有该用户 -1 密码错误 1 登录成功
-                    console.log(response.data);
+                    if(response.data.result == "-2"){
+                        return message.error('用户名错误');
+                    }
+                    if(response.data.result == "-1"){
+                        return message.error('密码错误，请重新输入');
+                    }
+                    if(response.data.result == "1"){
+                        return message.success('登录成功，即将跳转');
+                    }
                 })
         }
 

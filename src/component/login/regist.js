@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import {message, Form, Icon, Input, Button, Checkbox } from 'antd';
 import './login.css'
 // import FormItem from 'antd/lib/form/FormItem';
 import axios from 'axios'
@@ -31,7 +31,7 @@ class Login extends Component {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" onClick={this.handleLogin} style={{ width: "100%" }} size="large" className="login-form-button">立即注册</Button>
+                        <Button type="primary" htmlType="submit" onClick={this.handleRegist} style={{ width: "100%" }} size="large" className="login-form-button">立即注册</Button>
                     </Form.Item>
 
                     <Form.Item>
@@ -43,15 +43,27 @@ class Login extends Component {
     }
 
 
-    handleLogin = () => { // 处理点击登陆事件函数
+    handleRegist = () => { // 处理点击登陆事件函数
         let username = this.refs.username.state.value;
         let password = this.refs.password.state.value;
         if (username && password) {
             let data = { username, password }
-            axios.post('http://127.0.0.1:4000/login', data)
+            axios.post('http://127.0.0.1:4000/regist', data)
                 .then(function (response) {
-                    // -2 没有该用户 -1 密码错误 1 登录成功
-                    console.log(response.data);
+
+
+                    // console.log(response)
+
+                    // -1 该用户名已存在 1 注册成功 -2 注册失败
+                    if(response.data.result == "-1"){
+                        return message.error('该用户名已存在');
+                    }
+                    if(response.data.result == "1"){
+                        return message.success('注册成功，即将跳转');
+                    }
+                    if(response.data.result == "-2"){
+                        return message.error('注册失败');
+                    }
                 })
         }
 
