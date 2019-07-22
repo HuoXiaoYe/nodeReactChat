@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {message, Form, Icon, Input, Button, Checkbox } from 'antd';
+import { message, Form, Icon, Input, Button} from 'antd';
 import './login.css'
 // import FormItem from 'antd/lib/form/FormItem';
 import axios from 'axios'
@@ -49,19 +49,21 @@ class Login extends Component {
         if (username && password) {
             let data = { username, password }
             axios.post('http://127.0.0.1:4000/regist', data)
-                .then(function (response) {
-
-
-                    // console.log(response)
+                .then((response) => {
 
                     // -1 该用户名已存在 1 注册成功 -2 注册失败
-                    if(response.data.result == "-1"){
+                    if (response.data.result === "-1") {
                         return message.error('该用户名已存在');
                     }
-                    if(response.data.result == "1"){
-                        return message.success('注册成功，即将跳转');
+                    if (response.data.result === "1") {
+                        let datastr = JSON.stringify(data)
+                        localStorage.setItem("user" , datastr)
+                        message.success('注册成功，即将跳转');
+                        this.props.history.push("/home")
+                        return 
+                       
                     }
-                    if(response.data.result == "-2"){
+                    if (response.data.result === "-2") {
                         return message.error('注册失败');
                     }
                 })

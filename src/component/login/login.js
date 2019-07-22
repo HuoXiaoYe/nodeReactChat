@@ -52,16 +52,21 @@ class Login extends Component {
         if (username && password) {
             let data = { username, password }
             axios.post('http://127.0.0.1:4000/login', data)
-                .then(function (response) {
+                .then( (response)=> {
                     // -2 没有该用户 -1 密码错误 1 登录成功
-                    if(response.data.result == "-2"){
+                    if(response.data.result === "-2"){
                         return message.error('用户名错误');
                     }
-                    if(response.data.result == "-1"){
+                    if(response.data.result === "-1"){
                         return message.error('密码错误，请重新输入');
                     }
-                    if(response.data.result == "1"){
-                        return message.success('登录成功，即将跳转');
+                    if(response.data.result === "1"){
+                        let datastr = JSON.stringify(data)
+                        localStorage.setItem("user" , datastr)
+                        message.success('登录成功，即将跳转');
+                        // console.log(this.props.history)
+                        this.props.history.push("/home")
+                        return 
                     }
                 })
         }
