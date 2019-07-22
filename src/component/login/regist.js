@@ -59,7 +59,7 @@ class Login extends Component {
                         let datastr = JSON.stringify(data)
                         localStorage.setItem("user" , datastr)
                         message.success('注册成功，即将跳转');
-                        this.props.history.push("/home")
+                        this.props.history.push("/home/all")
                         return 
                        
                     }

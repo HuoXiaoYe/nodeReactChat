@@ -65,7 +65,7 @@ class Login extends Component {
                         localStorage.setItem("user" , datastr)
                         message.success('登录成功，即将跳转');
                         // console.log(this.props.history)
-                        this.props.history.push("/home")
+                        this.props.history.push("/home/all")
                         return 
                     }
                 })
