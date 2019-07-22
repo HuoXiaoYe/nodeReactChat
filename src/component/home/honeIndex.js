@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Link, Route } from 'react-router-dom'
+
+// 导入所需的三个页面
+
+import All from '../all/all.js';
+import My from '../my/my.js';
+import Mine from '../mine/mine.js'
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+
+
+
 
 // import './homeIndex.styl'
 
@@ -27,23 +36,33 @@ class HomeIndex extends Component {
                         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                             <Menu.Item key="1">
                                 <Icon type="profile" />
-                                <span>全部说说</span>
+                                <span>
+                                    <Link to="/home/all" style={{color:"white"}}>全部说说</Link>
+                                </span>
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Icon type="message" />
-                                <span>我的说说</span>
+                                <span>
+                                    <Link to="/home/my" style={{color:"white"}}>个人说说</Link>
+                                </span>
                             </Menu.Item>
                             <Menu.Item key="9">
                                 <Icon type="user" />
-                                <span>个人中心</span>
+                                <span>
+                                    <Link to="/home/mine" style={{color:"white"}}>个人中心</Link>
+                                </span>
                             </Menu.Item>
                         </Menu>
                     </Sider>
-                    <Layout>
-                        <Content style={{ margin: '0 16px' }}>
-                            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>Bill is a cat.</div>
+                    <Layout style={{display:"flex",height:"100vh"}}>
+                        <Content style={{ margin: '10px',height:"100vh"}}>
+                            <div style={{ margin: '14 14 0 14', background: '#fff', height: '100%',boxShadow:"2px 2px 2px 2px #ccc",borderRadius:"10px" }}>
+                                <Route path="/home/all" component={All}></Route>
+                                <Route path="/home/my" component={My}></Route>
+                                <Route path="/home/mine" component={Mine}></Route>
+                            </div>
                         </Content>
-                        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                        <Footer style={{ textAlign: 'center',padding:10}}>Ant Design ©2018 Created by Ant UED</Footer>
                     </Layout>
                 </Layout>
             </div>
@@ -53,7 +72,6 @@ class HomeIndex extends Component {
         console.log(this.state.user)
     }
     onCollapse = collapsed => {
-        console.log(collapsed);
         this.setState({ collapsed });
       };
     
