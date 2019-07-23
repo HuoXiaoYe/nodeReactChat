@@ -39,13 +39,13 @@ class xiaoye_db {
 				var limitNumber = 0;
 				var sortObj = {};
 			} else {
-				var skipAmount = args.pageSize * args.page;
-				var limitNumber = args.pageSize;
+				var skipAmount = parseInt(args.pageSize)  *  parseInt(args.page);
+				var limitNumber =  parseInt(args.pageSize);
 				var sortObj = args.sort;
 			}
 			let dbase = db.db(this.databaseName)
+
 			dbase.collection(collectionName).find(json).limit(limitNumber).skip(skipAmount).sort(sortObj).toArray((err, result) => {
-				// console.log(result)
 				callback && callback(err, result)
 			})
 		})

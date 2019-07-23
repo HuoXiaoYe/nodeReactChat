@@ -4,14 +4,20 @@ import {Pagination} from 'antd'
 
 import Artical from './artical.js'
 
+import axios from 'axios'
+
 import './all.styl'
 
 class All extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            pageSize : 6,
+            articalList : []
+         }
     }
     render() { 
+        let {articalList} = this.state;
         return ( 
             <div className="all-container">
                 <div className="header">
@@ -25,8 +31,8 @@ class All extends Component {
                 <div className="main" style={{paddingTop:'30px'}}>
                     <div className="all-artical">
                         {
-                            [1,2,3,4,5,6].map(item=>{
-                                return <Artical />
+                            articalList.map((item,index)=>{
+                                return <Artical data={item} key={index} />
                             })
                         }
                     </div>
@@ -37,8 +43,23 @@ class All extends Component {
             </div>
          );
     }
+    componentWillMount(){
+        this.getArtical(0)
+    }
     onChange=(currentPage)=>{ // 切换页数触发该函数 从 1 开始
-        console.log(currentPage)
+        // console.log(currentPage)
+        this.getArtical(currentPage - 1)
+    }
+    getArtical=(page)=>{
+        console.log(page)
+        axios.get(`http://127.0.0.1:4000/getartical?pageSize=${this.state.pageSize}&page=${page}`).then((result)=>{
+            // console.log(result.data)
+            this.setState({
+                articalList : result.data
+            },function(){
+                // console.log(this.state.articalList)
+            })
+        })
     }
 }
  

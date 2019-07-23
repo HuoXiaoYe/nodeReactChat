@@ -33,7 +33,6 @@ class HomeIndex extends Component {
             <div className="home-contaienr">
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                        <div className="logo" />
                         <Menu theme="dark" defaultSelectedKeys={[window.location.hash.slice(1)]} mode="inline">
                             <img src={this.state.imgUrl} style={{ width: !this.state.collapsed ? 100 : 40, border: "3px solid rgba(255, 255, 255, .3)", borderRadius: '50%', margin: !this.state.collapsed ? "10px 50px" : "10px 20px", transition: "width .17s linear" }} />
                             <p style={{ height: "20px", textAlign: "center", padding: "20px 0", display: !this.state.collapsed ? "block" : "none" }}>{JSON.parse(localStorage.getItem('user')).username}</p>
@@ -75,12 +74,11 @@ class HomeIndex extends Component {
     }
     componentDidMount() {
         console.log(window.location.hash.slice(1))
-        this.setState({ imgUrl: '/girl.jpg' })
+        this.setState({ imgUrl: '/images/girl.jpg' })
     }
     onCollapse = collapsed => {
         this.setState({ collapsed });
-    };
-
+    }
 }
 
 export default HomeIndex;
