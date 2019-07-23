@@ -26,32 +26,29 @@ class Artical extends Component {
                     </p>
                     }
                     datetime={
-                        <Tooltip
-                            title={moment()
-                                .subtract(10, 'days')
-                                .format('YYYY-MM-DD HH:mm:ss')}
-                        >
                             <span>
                                 {moment()
-                                    .subtract(10, 'days')
+                                    .subtract(this.getTime(data.datetime) , 'hours')
                                     .fromNow()}
                             </span>
-                        </Tooltip>
                     }
                 />
             </div>
         );
     }
-    // componentWillUpdate(){
-    //     this.setState({
-    //         data:this.props.data
-    //     })
-    // }
     componentWillReceiveProps(nextProps){
         console.log(nextProps)
         this.setState({
             data : nextProps.data
         })
+    }
+    getTime(time){
+        let oldDate = new Date(time).getTime();
+        let nowDate = new Date().getTime();
+        let dif = nowDate - oldDate; // 毫秒值
+        let hours =  dif / 1000 / 60/ 60 
+        return(hours)
+
     }
 }
 
