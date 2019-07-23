@@ -63,8 +63,7 @@ class Login extends Component {
                     if(response.data.result === "1"){
                         let datastr = JSON.stringify(data)
                         localStorage.setItem("user" , datastr)
-                        message.success('登录成功，即将跳转');
-                        // console.log(this.props.history)
+                        message.success(`欢迎${data.username}来到霍小叶的天地`);
                         this.props.history.push("/home/all")
                         return 
                     }

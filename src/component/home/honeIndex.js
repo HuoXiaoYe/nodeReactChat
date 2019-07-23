@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import { Link, Route } from 'react-router-dom'
+
 
 // 导入所需的三个页面
 
@@ -8,8 +9,7 @@ import All from '../all/all.js';
 import My from '../my/my.js';
 import Mine from '../mine/mine.js'
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Content, Footer, Sider } = Layout;
 
 
 
@@ -24,7 +24,8 @@ class HomeIndex extends Component {
         super(props);
         this.state = {
             user: JSON.parse(localStorage.getItem('user')),
-            collapsed: false
+            collapsed: false,
+            imgUrl: ''
         }
     }
     render() {
@@ -34,20 +35,28 @@ class HomeIndex extends Component {
                     <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                         <div className="logo" />
                         <Menu theme="dark" defaultSelectedKeys={[window.location.hash.slice(1)]} mode="inline">
+                            <img src={this.state.imgUrl} style={{ width: !this.state.collapsed ? 100 : 40, border: "3px solid rgba(255, 255, 255, .3)", borderRadius: '50%', margin: !this.state.collapsed ? "10px 50px" : "10px 20px", transition: "width .17s linear" }} />
+                            <p style={{ height: "20px", textAlign: "center", padding: "20px 0", display: !this.state.collapsed ? "block" : "none" }}>{JSON.parse(localStorage.getItem('user')).username}</p>
                             <Menu.Item key="/home/all">
-                                <Icon type="profile" />
-                                <span><Link to="/home/all" style={{ color: "white" }}>全部说说</Link></span>
+                                <Link to="/home/all">
+                                    <Icon type="profile" />
+                                    <span>全部动态</span>
+                                </Link>
                             </Menu.Item>
                             <Menu.Item key="/home/my">
-                                <Icon type="message" />
-                                <span><Link to="/home/my" style={{ color: "white" }}>个人说说</Link></span>
+                                <Link to="/home/my">
+                                    <Icon type="message" />
+                                    <span>我的动态</span>
+                                </Link>
                             </Menu.Item>
                             <Menu.Item key="/home/mine">
-                                <Icon type="user" />
-                               <span> <Link to="/home/mine" style={{ color: "white" }}> 个人中心 </Link></span>    
-                                
+                                <Link to="/home/mine">
+                                    <Icon type="user" />
+                                    <span>个人中心 </span>
+                                </Link>
                             </Menu.Item>
                         </Menu>
+
                     </Sider>
                     <Layout style={{ display: "flex", height: "100vh" }}>
                         <Content style={{ margin: '10px', height: "100vh" }}>
@@ -55,9 +64,10 @@ class HomeIndex extends Component {
                                 <Route path="/home/all" component={All}></Route>
                                 <Route path="/home/my" component={My}></Route>
                                 <Route path="/home/mine" component={Mine}></Route>
+                                {/* <img src={girl} /> */}
                             </div>
                         </Content>
-                        <Footer style={{ textAlign: 'center', padding: 10 }}>xiaoye Design ©2019 Created by 霍小叶</Footer>
+                        <Footer style={{ textAlign: 'center', padding: 10 }}>xiaoye Design ©2019/07/22-2019/08/17 Created by 霍小叶</Footer>
                     </Layout>
                 </Layout>
             </div>
@@ -65,6 +75,7 @@ class HomeIndex extends Component {
     }
     componentDidMount() {
         console.log(window.location.hash.slice(1))
+        this.setState({ imgUrl: '/girl.jpg' })
     }
     onCollapse = collapsed => {
         this.setState({ collapsed });
