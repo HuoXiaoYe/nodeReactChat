@@ -60,10 +60,15 @@ exports.doRegist = (req, res) => {
 
 exports.getArtical = (req, res) => {
     let queryObj = req.query
-    console.log(queryObj)
     xiaoye.find("artical", {},{pageSize : queryObj.pageSize,page: queryObj.page,sort:{'datetime':-1}},(err, result) => {
         res.json(result)
         res.end()
         return
+    })
+}
+exports.getAllCount = (req,res)=>{
+    
+    xiaoye.getAllCount(req.params.collextionname,(count)=>{
+        res.end(count.toString())
     })
 }

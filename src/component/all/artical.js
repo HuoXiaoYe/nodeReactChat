@@ -37,7 +37,6 @@ class Artical extends Component {
         );
     }
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
         this.setState({
             data : nextProps.data
         })

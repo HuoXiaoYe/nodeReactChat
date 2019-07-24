@@ -20,5 +20,6 @@ app.use((req,res,next)=>{ // 设置跨域请求
 app.post("/login",router.doLogin)
 app.post("/regist",router.doRegist)
 app.get("/getartical",router.getArtical)
+app.get("/getallcount/:collextionname",router.getAllCount)
 
 app.listen(4000)

@@ -39,15 +39,43 @@ class xiaoye_db {
 				var limitNumber = 0;
 				var sortObj = {};
 			} else {
-				var skipAmount = parseInt(args.pageSize)  *  parseInt(args.page);
-				var limitNumber =  parseInt(args.pageSize);
-				var sortObj = args.sort;
+				var skipAmount = parseInt(args.pageSize)  *  parseInt(args.page) || 0;
+				var limitNumber =  parseInt(args.pageSize) || 0;
+				var sortObj = args.sort || {};
 			}
 			let dbase = db.db(this.databaseName)
 
 			dbase.collection(collectionName).find(json).limit(limitNumber).skip(skipAmount).sort(sortObj).toArray((err, result) => {
 				callback && callback(err, result)
 			})
+		})
+	}
+	update(collectionName, json1, json2, callback){ // 更新函数
+		this._connect((err,db)=>{
+			if(err) return console.log("数据库连接失败")
+			let dbase = db.db(this.databaseName)
+			dbase.collection(collectionName).updateMany(json1,{$set:json2},(err,result)=>{
+				callback&&callback(err,result)
+			})
+		})
+	}
+	removeData(collectionName, json, callback){ // 删除函数
+		this._connect((err,db)=>{
+			if(err) return console.log("数据库连接失败")
+			let dbase = db.db(this.databaseName)
+			dbase.collection(collectionName).deleteMany(json,(err,result)=>{
+				callback&&callback(err,result)
+			})
+		})
+	}
+
+	getAllCount(collectionName, callback) { // 获取所有个数
+		this._connect((err, db) => {
+			if (err) return console.log("数据库连接失败")
+			let dbase = db.db(this.databaseName)
+			dbase.collection(collectionName).count({}).then((count) => {
+				callback&&callback(count);
+			});
 		})
 	}
 }
