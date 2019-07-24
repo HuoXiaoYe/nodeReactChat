@@ -42,15 +42,40 @@ class Artical extends Component {
                     visible={this.state.visible}
                     onOk={this.handleCancel}
                     okText="朕已阅"
-                    cancelText= '取消'
+                    cancelText='取消'
                     footer={[
                         <Button key="submit" type="primary" onClick={this.handleCancel}>
-                          朕已阅
+                            朕已阅
                         </Button>,
-                      ]}
-                   
+                    ]}
+
                 >
                     <p>{data.content}</p>
+
+                    <p style={{marginTop:20}}>精彩评论：</p>
+
+                    {
+                        data.commments.map((item, index) => {
+                            return (
+                                <Comment
+                                    author={<a>{item.name}</a>}
+                                    avatar={
+                                        <Avatar
+                                            src={item.avatar}
+                                            alt={item.name}
+                                        />
+                                    }
+                                    content={
+                                        <p>
+                                            {item.content}
+                                        </p>
+                                    }
+                                >
+                                </Comment>
+                            )
+                        })
+                    }
+
                 </Modal>
 
 
@@ -73,26 +98,24 @@ class Artical extends Component {
 
     }
     showModal = () => {
-        console.log(111)
         this.setState({
-          visible: true,
+            visible: true,
         });
         return
-      }
-      hidemodal=()=>{
-          console.log(222)
-          this.setState({
-            visible: false,
-          });
-          return
-      }
-    
-      handleCancel = e => {
+    }
+    hidemodal = () => {
+        console.log(222)
         this.setState({
-          visible: false
+            visible: false,
+        });
+        return
+    }
+
+    handleCancel = e => {
+        this.setState({
+            visible: false
         })
-        console.log(this.state.visible)
-      };
+    };
 }
 
 export default Artical;
