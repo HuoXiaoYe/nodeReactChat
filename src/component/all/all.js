@@ -68,8 +68,6 @@ class All extends Component {
             
             this.setState({ 
                 allCount: parseInt(response.data)
-            },function(){
-                console.log(this.state.allCount)
             })
         })
     }

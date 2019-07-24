@@ -15,8 +15,8 @@ class Artical extends Component {
     render() {
         let data = this.state.data;
         return (
-            <div style={{ padding: '0 100px', lineHeight: '20px' }} onClick={this.showModal}>
-                <Comment
+            <div style={{ padding: '0 100px', lineHeight: '20px' }} >
+                <Comment onClick={this.showModal}
                     author={<a>{data.name}</a>}
                     avatar={
                         <Avatar src={data.avatar} alt="jsx-a11y/alt-text" />
@@ -40,8 +40,14 @@ class Artical extends Component {
                 <Modal
                     title={data.name + ":"}
                     visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
+                    onOk={this.handleCancel}
+                    okText="朕已阅"
+                    cancelText= '取消'
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleCancel}>
+                          朕已阅
+                        </Button>,
+                      ]}
                    
                 >
                     <p>{data.content}</p>
@@ -67,23 +73,25 @@ class Artical extends Component {
 
     }
     showModal = () => {
+        console.log(111)
         this.setState({
           visible: true,
         });
-      };
-    
-      handleOk = e => {
-        // console.log(e);
-        this.setState({
-          visible: false,
-        });
-      };
+        return
+      }
+      hidemodal=()=>{
+          console.log(222)
+          this.setState({
+            visible: false,
+          });
+          return
+      }
     
       handleCancel = e => {
-        // console.log(e);
         this.setState({
-          visible: false,
-        });
+          visible: false
+        })
+        console.log(this.state.visible)
       };
 }
 
