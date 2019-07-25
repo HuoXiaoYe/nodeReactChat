@@ -62,6 +62,9 @@ class Login extends Component {
                     }
                     if(response.data.result === "1"){
                         data.avatar = response.data.avatar;
+
+                        console.log(data.avatar)
+
                         let datastr = JSON.stringify(data)
                         localStorage.setItem("user" , datastr)
                         message.success(`欢迎${data.username}来到霍小叶的天地`);

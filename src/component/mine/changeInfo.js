@@ -96,8 +96,12 @@ class ChangeInfo extends Component {
             userInfo.avatar = result.data.avatar
             localStorage.setItem("user",JSON.stringify(userInfo))
             // 修改 头像
+
+            console.log(userInfo.avatar)
             let imgObj = document.getElementById("imgBox");
             imgObj.src = `${userInfo.avatar}`
+            // 返回 到 个人信息页面
+            this.props.history.push("/home/mine")
         })
     }
 }

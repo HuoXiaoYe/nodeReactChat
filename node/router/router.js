@@ -23,7 +23,7 @@ exports.doLogin = (req, res) => {
                 return res.end()
             }
             if (result[0].password == data.password) { // 成功
-                console.log()
+                console.log(result[0].avatar)
                 res.send({ "result": "1", "avatar": result[0].avatar })
                 return res.end()
             }
@@ -104,7 +104,7 @@ exports.update = (req, res) => {
         var dataBuffer = new Buffer.from(base64Data, 'base64');
         fs.writeFile(fileName, dataBuffer, function (err) {
             xiaoye.update("userInfo", { username }, {
-                avatar: "/images" + tempname
+                avatar: "/images/" + tempname
             }, (err, result) => {
                 if (err) return res.end("-1")
                 res.json({
