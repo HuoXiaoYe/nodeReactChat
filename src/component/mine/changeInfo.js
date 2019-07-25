@@ -90,7 +90,14 @@ class ChangeInfo extends Component {
         console.log(data)
         Axios.post("http://127.0.0.1:4000/update",data)
         .then((result)=>{
-            console.log(result)
+            // console.log(result)
+            // 改变localStorage中的值
+            let userInfo = JSON.parse(localStorage.getItem("user"))
+            userInfo.avatar = result.data.avatar
+            localStorage.setItem("user",JSON.stringify(userInfo))
+            // 修改 头像
+            let imgObj = document.getElementById("imgBox");
+            imgObj.src = `${userInfo.avatar}`
         })
     }
 }
