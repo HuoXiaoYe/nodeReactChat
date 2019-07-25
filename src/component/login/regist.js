@@ -47,7 +47,7 @@ class Login extends Component {
         let username = this.refs.username.state.value;
         let password = this.refs.password.state.value;
         if (username && password) {
-            let data = { username, password }
+            let data = { username, password,"avatar": "/images/02.jpg" }
             axios.post('http://127.0.0.1:4000/regist', data)
                 .then((response) => {
 

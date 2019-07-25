@@ -50,7 +50,7 @@ class Login extends Component {
         let username = this.refs.username.state.value;
         let password = this.refs.password.state.value;
         if (username && password) {
-            let data = { username, password }
+            let data = { username, password}
             axios.post('http://127.0.0.1:4000/login', data)
                 .then( (response)=> {
                     // -2 没有该用户 -1 密码错误 1 登录成功
@@ -61,6 +61,7 @@ class Login extends Component {
                         return message.error('密码错误，请重新输入');
                     }
                     if(response.data.result === "1"){
+                        data.avatar = response.data.avatar;
                         let datastr = JSON.stringify(data)
                         localStorage.setItem("user" , datastr)
                         message.success(`欢迎${data.username}来到霍小叶的天地`);

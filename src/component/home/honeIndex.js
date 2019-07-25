@@ -25,7 +25,7 @@ class HomeIndex extends Component {
         this.state = {
             user: JSON.parse(localStorage.getItem('user')),
             collapsed: false,
-            imgUrl: ''
+            imgUrl: JSON.parse(localStorage.getItem('user')).avatar || '/images/03.jpg'
         }
     }
     render() {
@@ -74,7 +74,7 @@ class HomeIndex extends Component {
     }
     componentDidMount() {
         console.log(window.location.hash.slice(1))
-        this.setState({ imgUrl: '/images/girl.jpg' })
+        // this.setState({ imgUrl: '/images/girl.jpg' })
     }
     onCollapse = collapsed => {
         this.setState({ collapsed });

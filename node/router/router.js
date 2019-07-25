@@ -19,7 +19,8 @@ exports.doLogin = (req, res) => {
                 return res.end()
             }
             if (result[0].password == data.password) { // 成功
-                res.send({ "result": "1" })
+                console.log()
+                res.send({ "result": "1","avatar":result[0].avatar})
                 return res.end()
             }
             res.send({ "result": "-1" })

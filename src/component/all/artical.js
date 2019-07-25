@@ -41,6 +41,7 @@ class Artical extends Component {
                     title={data.name + ":"}
                     visible={this.state.visible}
                     onOk={this.handleCancel}
+                    onCancel={this.handleCancel}
                     okText="朕已阅"
                     cancelText='取消'
                     footer={[
@@ -52,12 +53,13 @@ class Artical extends Component {
                 >
                     <p>{data.content}</p>
 
-                    <p style={{marginTop:20}}>精彩评论：</p>
+                    <p style={{marginTop:20,color:'rgb(0,33,64)'}}>精彩评论：</p>
 
                     {
                         data.commments.map((item, index) => {
                             return (
                                 <Comment
+                                    key={index}
                                     author={<a>{item.name}</a>}
                                     avatar={
                                         <Avatar
