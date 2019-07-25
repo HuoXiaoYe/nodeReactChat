@@ -73,3 +73,13 @@ exports.getAllCount = (req,res)=>{
         res.end(count.toString())
     })
 }
+
+
+exports.getUserInfo = (req,res)=>{
+    // console.log(req.params.username)
+    let username = req.params.username
+    xiaoye.find("userInfo",{username},(err,result)=>{
+        res.send(result)
+        res.end()
+    })
+}

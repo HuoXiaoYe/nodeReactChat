@@ -21,5 +21,6 @@ app.post("/login",router.doLogin)
 app.post("/regist",router.doRegist)
 app.get("/getartical",router.getArtical)
 app.get("/getallcount/:collextionname",router.getAllCount)
+app.get("/userinfo/:username",router.getUserInfo)
 
 app.listen(4000)

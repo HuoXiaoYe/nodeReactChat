@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
 import './mine.styl'
+import axios from 'axios';
 
 class Mine extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            userInfo : {}
+         }
     }
     render() { 
+        let {username,studentId,gender,major,college,branch,telPhone,email,intr} = this.state.userInfo;
         return ( 
             <div className="mine-container">
                <div className="header">
@@ -22,50 +26,64 @@ class Mine extends Component {
                     <li className="item">
                         <ul>
                             <li>
-                                用户名:&nbsp;&nbsp;&nbsp;&nbsp;XXX
+                                用户名:&nbsp;&nbsp;&nbsp;&nbsp;{username || '未设置'}
                             </li>
                             <li>
-                                学号:&nbsp;&nbsp;&nbsp;&nbsp;177111111
+                                学号:&nbsp;&nbsp;&nbsp;&nbsp;{studentId || '未设置'}
                             </li>
                             <li>
-                                性别:&nbsp;&nbsp;&nbsp;&nbsp;男
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="item">
-                        <ul>
-                            <li>
-                                专业:&nbsp;&nbsp;&nbsp;&nbsp;兽医学
-                            </li>
-                            <li>
-                                学院:&nbsp;&nbsp;&nbsp;&nbsp;兽医学院
-                            </li>
-                            <li>
-                                团支部:&nbsp;&nbsp;&nbsp;&nbsp;1708团支部
+                                性别:&nbsp;&nbsp;&nbsp;&nbsp;{gender || '未设置'}
                             </li>
                         </ul>
                     </li>
                     <li className="item">
                         <ul>
                             <li>
-                                电话:&nbsp;&nbsp;&nbsp;&nbsp;188888888
+                                专业:&nbsp;&nbsp;&nbsp;&nbsp;{major || '未设置'}
                             </li>
                             <li>
-                                邮箱:&nbsp;&nbsp;&nbsp;&nbsp;888888@163.com
+                                学院:&nbsp;&nbsp;&nbsp;&nbsp;{college || '未设置'}
                             </li>
                             <li>
-                                团支部:&nbsp;&nbsp;&nbsp;&nbsp;1708团支部
+                                团支部:&nbsp;&nbsp;&nbsp;&nbsp;{branch || '未设置'}
+                            </li>
+                        </ul>
+                    </li>
+                    <li className="item">
+                        <ul>
+                            <li>
+                                电话:&nbsp;&nbsp;&nbsp;&nbsp;{telPhone || '未设置'}
+                            </li>
+                            <li>
+                                邮箱:&nbsp;&nbsp;&nbsp;&nbsp;{email || '未设置'}
+                            </li>
+                            <li>
+                                团支部:&nbsp;&nbsp;&nbsp;&nbsp;{branch || '未设置'}
                             </li>
                         </ul>
                     </li>
                </ul>
                <div className="intro">
                     <p>个人介绍：</p>
-                    <p>这几天心里颇不宁静。今晚在院子里坐着乘凉，忽然想起日日走过的荷塘，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高了，墙外马路上孩子们的欢笑，已经听不见了；妻在屋里拍着闰儿⑴，迷迷糊糊地哼着眠歌。我悄悄地披了大衫，带上门出去。</p>
+                    <p>{intr || '这几天心里颇不宁静。今晚在院子里坐着乘凉，忽然想起日日走过的荷塘，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高了，墙外马路上孩子们的欢笑，已经听不见了；妻在屋里拍着闰儿⑴，迷迷糊糊地哼着眠歌。我悄悄地披了大衫，带上门出去。' }</p>
                </div>
                
             </div>
          );
+    }
+
+    componentWillMount(){
+        this.getUserInfo() 
+    }
+    getUserInfo=()=>{ // 获取个人信息页面
+        let username = JSON.parse(localStorage.getItem("user")).username;
+        console.log(username)
+        axios.get(`http://127.0.0.1:4000/userinfo/${username}`).then((result)=>{
+            console.log(result.data[0])
+            this.setState({
+                userInfo : result.data[0]
+            })
+        })
     }
 }
  
