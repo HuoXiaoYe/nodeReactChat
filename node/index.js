@@ -22,5 +22,6 @@ app.post("/regist",router.doRegist)
 app.get("/getartical",router.getArtical)
 app.get("/getallcount/:collextionname",router.getAllCount)
 app.get("/userinfo/:username",router.getUserInfo)
+app.post("/update",router.update)
 
 app.listen(4000)

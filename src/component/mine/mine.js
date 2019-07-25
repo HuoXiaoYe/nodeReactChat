@@ -3,6 +3,8 @@ import { Button } from 'antd';
 import './mine.styl'
 import axios from 'axios';
 
+import {Link} from 'react-router-dom'
+
 class Mine extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +22,9 @@ class Mine extends Component {
                        <p>你可以在这里查看并编辑自己的个人信息</p>
                     </div>
 
-                   <Button type="primary">修改个人信息</Button>
+                   <Link to="/home/changeinfo">
+                        <Button type="primary">修改个人信息</Button>
+                   </Link>
                </div>
                <ul className="main">
                     <li className="item">

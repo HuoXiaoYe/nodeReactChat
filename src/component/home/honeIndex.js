@@ -9,6 +9,8 @@ import All from '../all/all.js';
 import My from '../my/my.js';
 import Mine from '../mine/mine.js'
 
+import ChangeInfo from "../mine/changeInfo.js"
+
 const { Content, Footer, Sider } = Layout;
 
 
@@ -63,6 +65,7 @@ class HomeIndex extends Component {
                                 <Route path="/home/all" component={All}></Route>
                                 <Route path="/home/my" component={My}></Route>
                                 <Route path="/home/mine" component={Mine}></Route>
+                                <Route path="/home/changeinfo" component={ChangeInfo}></Route>
                                 {/* <img src={girl} /> */}
                             </div>
                         </Content>
