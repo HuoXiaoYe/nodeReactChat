@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import { Input, Upload, Icon, message, Button,Form } from 'antd';
+import { Input, Upload, Icon, message, Button, Form } from 'antd';
 
 import "./changeInfo.styl"
 
 
 import Axios from 'axios';
+
+const { TextArea } = Input;
 
 
 
@@ -51,8 +53,8 @@ class ChangeInfo extends Component {
         return (
             <div className="changeInfo-container" style={{ padding: "100px 100px", width: '80%' }}>
                 <Form.Item label="修改头像">
-                        
-                        <Upload
+
+                    <Upload
                         name="avatar"
                         listType="picture-card"
                         className="avatar-uploader"
@@ -64,8 +66,8 @@ class ChangeInfo extends Component {
                     >
                         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                     </Upload>
-                    </Form.Item>
-                    {/* 
+                </Form.Item>
+                {/* 
                     
                     
                     学号:    未设置
@@ -82,41 +84,45 @@ class ChangeInfo extends Component {
                 <ul className="main">
                     <li>
                         <Form.Item label="学号">
-                            <Input  name="studentId"/>   
-                        </Form.Item>
-                    </li>
-                    <li>
-                        <Form.Item label="性别">
-                            <Input name="gender"/>   
+                            <Input name="studentId" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="专业">
-                            <Input name="major"/>   
+                            <Input name="major" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="学院">
-                            <Input name="college"/>   
+                            <Input name="college" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="团支部">
-                            <Input name="branch"/>   
+                            <Input name="branch" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="手机号">
-                            <Input name="telPhone"/>   
+                            <Input name="telPhone" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="邮箱">
-                            <Input name="email"/>   
+                            <Input name="email" />
                         </Form.Item>
-                    </li> 
+                    </li>
 
                 </ul>
+                <div>
+                    <Form.Item label="个性签名">
+                        <TextArea
+                            placeholder="请在此编辑您的个性签名"
+                            autosize={{ minRows: 4, maxRows: 6 }}
+                            name="intr"
+                        />
+                    </Form.Item>
+                </div>
                 <Button type="primary" onClick={this.handelUpdate}>确认修改</Button>
             </div >
         )

@@ -13,7 +13,7 @@ class Mine extends Component {
          }
     }
     render() { 
-        let {username,studentId,gender,major,college,branch,telPhone,email,intr} = this.state.userInfo;
+        let {username,studentId,major,college,branch,telPhone,email,intr} = this.state.userInfo;
         return ( 
             <div className="mine-container">
                <div className="header">
@@ -35,9 +35,9 @@ class Mine extends Component {
                             <li>
                                 学号:&nbsp;&nbsp;&nbsp;&nbsp;{studentId || '未设置'}
                             </li>
-                            <li>
+                            {/* <li>
                                 性别:&nbsp;&nbsp;&nbsp;&nbsp;{gender || '未设置'}
-                            </li>
+                            </li> */}
                         </ul>
                     </li>
                     <li className="item">
@@ -68,7 +68,7 @@ class Mine extends Component {
                     </li>
                </ul>
                <div className="intro">
-                    <p>个人介绍：</p>
+                    <p>个性签名：</p>
                     <p>{intr || '这几天心里颇不宁静。今晚在院子里坐着乘凉，忽然想起日日走过的荷塘，在这满月的光里，总该另有一番样子吧。月亮渐渐地升高了，墙外马路上孩子们的欢笑，已经听不见了；妻在屋里拍着闰儿⑴，迷迷糊糊地哼着眠歌。我悄悄地披了大衫，带上门出去。' }</p>
                </div>
                
