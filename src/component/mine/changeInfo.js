@@ -7,8 +7,6 @@ import "./changeInfo.styl"
 
 import Axios from 'axios';
 
-const { TextArea } = Input;
-
 
 
 function getBase64(img, callback) {
@@ -172,7 +170,7 @@ class ChangeInfo extends Component {
             data.avatar = this.state.imageUrl
         }
 
-        if (Object.keys(data).length == 0) {
+        if (Object.keys(data).length === 0) {
             console.log(111)
             return
         }

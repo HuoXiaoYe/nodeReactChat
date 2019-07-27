@@ -17,7 +17,7 @@ class Artical extends Component {
         return (
             <div style={{ padding: '0 100px', lineHeight: '20px' }} >
                 <Comment onClick={this.showModal}
-                    author={<a>{data.name}</a>}
+                    author={data.name}
                     avatar={
                         <Avatar src={data.avatar} alt="jsx-a11y/alt-text" />
                     }
@@ -60,7 +60,7 @@ class Artical extends Component {
                             return (
                                 <Comment
                                     key={index}
-                                    author={<a>{item.name}</a>}
+                                    author={item.name}
                                     avatar={
                                         <Avatar
                                             src={item.avatar}

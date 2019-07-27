@@ -35,6 +35,9 @@ class Mine extends Component {
                             <li>
                                 学号:&nbsp;&nbsp;&nbsp;&nbsp;{studentId || '未设置'}
                             </li>
+                            <li>
+                                邮箱:&nbsp;&nbsp;&nbsp;&nbsp;{email || '未设置'}
+                            </li>
                             {/* <li>
                                 性别:&nbsp;&nbsp;&nbsp;&nbsp;{gender || '未设置'}
                             </li> */}
@@ -81,9 +84,7 @@ class Mine extends Component {
     }
     getUserInfo=()=>{ // 获取个人信息页面
         let username = JSON.parse(localStorage.getItem("user")).username;
-        console.log(username)
         axios.get(`http://127.0.0.1:4000/userinfo/${username}`).then((result)=>{
-            console.log(result.data[0])
             this.setState({
                 userInfo : result.data[0]
             })
