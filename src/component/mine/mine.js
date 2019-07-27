@@ -16,7 +16,7 @@ class Mine extends Component {
     render() {
         let { username, studentId, major, college, branch, telPhone, email, intr } = this.state.userInfo;
         return (
-            <div className="mine-container">
+            <div className="mine-container" style={{paddingTop:150}}>
                 <div className="header">
                     <div>
                         <p>我的信息</p>

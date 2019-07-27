@@ -36,7 +36,7 @@ class HomeIndex extends Component {
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                         <Menu theme="dark" defaultSelectedKeys={[window.location.hash.slice(1)]} mode="inline" alt="头像">
-                            <img id="imgBox" alt="头像" src={this.state.imgUrl} style={{ width: !this.state.collapsed ? 100 : 40,height: !this.state.collapsed ? 100 : 40, border: "3px solid rgba(255, 255, 255, .3)", borderRadius: '50%', margin: !this.state.collapsed ? "10px 50px" : "10px 20px", transition: "width .17s linear" }} />
+                            <img id="imgBox" alt="头像" src={this.state.imgUrl} style={{ width: !this.state.collapsed ? 100 : 40,height: !this.state.collapsed ? 100 : 40, border: "3px solid rgba(255, 255, 255, .3)", borderRadius: '50%', margin: !this.state.collapsed ? "10px 50px" : "10px 20px", transition: "width .17s linear,height .17s linear" }} />
                             <p style={{ height: "20px", textAlign: "center", padding: "20px 0", display: !this.state.collapsed ? "block" : "none" }}>{JSON.parse(localStorage.getItem('user')).username}</p>
                             <Menu.Item key="/home/all">
                                 <Link to="/home/all">

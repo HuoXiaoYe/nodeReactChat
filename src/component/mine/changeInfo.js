@@ -49,7 +49,12 @@ class ChangeInfo extends Component {
             </div>
         );
         return (
-            <div className="changeInfo-container" style={{ padding: "100px 100px", width: '80%' }}>
+            <div className="changeInfo-container" style={{ padding: "80px 100px", width: '80%' }}>
+                {/* 返回按钮 */}
+                <Button style={{marginBottom:10}} onClick={this.goBack}>
+                    <Icon type="left" />
+                    返回
+                </Button>
                 <Form.Item label="修改头像">
 
                     <Upload
@@ -117,7 +122,7 @@ class ChangeInfo extends Component {
                         <Input.TextArea id="intr" autosize={{ minRows: 4, maxRows: 6 }} />
                     </Form.Item>
                 </div>
-                <Button type="primary" onClick={this.handelUpdate}>确认修改</Button>
+                <Button type="primary" style={{float:'right'}} onClick={this.handelUpdate}>确认修改</Button>
             </div >
         )
     }
@@ -186,10 +191,10 @@ class ChangeInfo extends Component {
         Axios.post("http://127.0.0.1:4000/update", data)
             .then((result) => {
                 // 如果返回了头像的路径 改变localStorage中的值
-                if(result.data.avatar){
+                if (result.data.avatar) {
                     let userInfo = JSON.parse(localStorage.getItem("user"))
                     userInfo.avatar = result.data.avatar
-                    localStorage.setItem("user", JSON.stringify(userInfo))            
+                    localStorage.setItem("user", JSON.stringify(userInfo))
                     // 修改头像
                     let imgObj = document.getElementById("imgBox");
                     imgObj.src = `${userInfo.avatar}`
@@ -197,6 +202,10 @@ class ChangeInfo extends Component {
                 // 返回到 个人信息页面
                 this.props.history.push("/home/mine")
             })
+    }
+    goBack=()=>{ // 点击返回按钮，回到上一级
+        this.props.history.goBack()
+
     }
 }
 
