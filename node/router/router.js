@@ -95,28 +95,44 @@ exports.update = (req, res) => {
         let dataObj = JSON.parse(datastr.toString())
         let imgdata = dataObj.avatar;
         let username = dataObj.username;
-        let re = /data\:image\/(.{3,10})\;base64/
-        let extname = re.exec(imgdata)[1] // 获取扩展名  没有 .
-        let tempname = Math.floor(Math.random() * 9999999 + 1000000) + '.' + extname;
-        let fileName = path.join(__dirname, '../.././public/images', tempname)
-        var base64Data = imgdata.replace(/^data:image\/\w+;base64,/, "");
-        var dataBuffer = new Buffer.from(base64Data, 'base64');
-        fs.writeFile(fileName, dataBuffer, function (err) {
-            xiaoye.update("userInfo", { username }, {
-                avatar: "/images/" + tempname
-            }, (err, result) => {
-                if (err) return res.end("-1")
-                res.json({
-                    result : '1',
-                    avatar : "/images/" + tempname
+        if (imgdata) { // 用户修改了头像
+            let re = /data\:image\/(.{3,10})\;base64/
+            let extname = re.exec(imgdata)[1] // 获取扩展名  没有 .
+            let tempname = Math.floor(Math.random() * 9999999 + 1000000) + '.' + extname;
+            let fileName = path.join(__dirname, '../.././public/images', tempname)
+            var base64Data = imgdata.replace(/^data:image\/\w+;base64,/, "");
+            var dataBuffer = new Buffer.from(base64Data, 'base64');
+            dataObj.avatar = "/images/" + tempname;
+            fs.writeFile(fileName, dataBuffer, function (err) {
+                xiaoye.update("userInfo", { username }, dataObj, (err, result) => {
+                    if (err) {
+                        return res.end("-1")
+                    }
+                    res.send({
+                        result: '1',
+                        avatar: "/images/" + tempname
+                    })
+                    res.end()
+                })
+            });
+        } else {
+            xiaoye.update("userInfo", { username }, dataObj, (err, result) => {
+                if (err) {
+                    return res.end("-1")
+                }
+                res.send({
+                    "result" : "1"
                 })
                 res.end()
             })
-        });
+        }
     })
 
 
 
 }
+
+
+
 
 

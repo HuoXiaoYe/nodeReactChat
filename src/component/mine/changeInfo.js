@@ -84,43 +84,39 @@ class ChangeInfo extends Component {
                 <ul className="main">
                     <li>
                         <Form.Item label="学号">
-                            <Input name="studentId" />
+                            <Input ref="studentId" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="专业">
-                            <Input name="major" />
+                            <Input ref="major" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="学院">
-                            <Input name="college" />
+                            <Input ref="college" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="团支部">
-                            <Input name="branch" />
+                            <Input ref="branch" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="手机号">
-                            <Input name="telPhone" />
+                            <Input ref="telPhone" />
                         </Form.Item>
                     </li>
                     <li>
                         <Form.Item label="邮箱">
-                            <Input name="email" />
+                            <Input ref="email" />
                         </Form.Item>
                     </li>
 
                 </ul>
                 <div>
                     <Form.Item label="个性签名">
-                        <TextArea
-                            placeholder="请在此编辑您的个性签名"
-                            autosize={{ minRows: 4, maxRows: 6 }}
-                            name="intr"
-                        />
+                        <Input.TextArea id="intr" autosize={{ minRows: 4, maxRows: 6 }} />
                     </Form.Item>
                 </div>
                 <Button type="primary" onClick={this.handelUpdate}>确认修改</Button>
@@ -143,23 +139,63 @@ class ChangeInfo extends Component {
         }
     }
     handelUpdate = () => {
-        let data = {
-            avatar: this.state.imageUrl,
-            username: JSON.parse(localStorage.getItem("user")).username
+        let data = {};
+        // console.log(Object.keys(data).length);
+        if (this.state.imageUrl) {
+            data.avatar = this.state.imageUrl
         }
-        console.log(data)
+        if (this.refs.studentId.state.value) {
+            data.studentId = this.refs.studentId.state.value;
+        }
+        if (this.refs.major.state.value) {
+            data.major = this.refs.major.state.value;
+        }
+        if (this.refs.college.state.value) {
+            data.college = this.refs.college.state.value;
+        }
+        if (this.refs.college.state.value) {
+            data.college = this.refs.college.state.value;
+        }
+        if (this.refs.branch.state.value) {
+            data.branch = this.refs.branch.state.value;
+        }
+        if (this.refs.telPhone.state.value) {
+            data.telPhone = this.refs.telPhone.state.value;
+        }
+        if (this.refs.email.state.value) {
+            data.email = this.refs.email.state.value;
+        }
+        if (document.getElementById("intr").value) {
+            data.intr = document.getElementById("intr").value
+        }
+        if (this.state.imageUrl) {
+            data.avatar = this.state.imageUrl
+        }
+
+        if (Object.keys(data).length == 0) {
+            console.log(111)
+            return
+        }
+        // 用户修改了信息，可以向后台提交信息
+        data.username = JSON.parse(localStorage.getItem("user")).username
+
+
+        // let data = {
+        //     avatar: this.state.imageUrl,
+        //     username: JSON.parse(localStorage.getItem("user")).username
+        // }
+        // console.log(data)
         Axios.post("http://127.0.0.1:4000/update", data)
             .then((result) => {
-                // console.log(result)
-                // 改变localStorage中的值
-                let userInfo = JSON.parse(localStorage.getItem("user"))
-                userInfo.avatar = result.data.avatar
-                localStorage.setItem("user", JSON.stringify(userInfo))
-                // 修改 头像
-
-                console.log(userInfo.avatar)
-                let imgObj = document.getElementById("imgBox");
-                imgObj.src = `${userInfo.avatar}`
+                // 如果返回了头像的路径 改变localStorage中的值
+                if(result.data.avatar){
+                    let userInfo = JSON.parse(localStorage.getItem("user"))
+                    userInfo.avatar = result.data.avatar
+                    localStorage.setItem("user", JSON.stringify(userInfo))            
+                    // 修改头像
+                    let imgObj = document.getElementById("imgBox");
+                    imgObj.src = `${userInfo.avatar}`
+                }
                 // 返回到 个人信息页面
                 this.props.history.push("/home/mine")
             })
