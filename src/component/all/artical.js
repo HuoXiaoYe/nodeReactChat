@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-import { Comment, Avatar, Modal, Button } from 'antd';
+import { Comment, Avatar, Modal, Button, Input, Form } from 'antd';
 import moment from 'moment';
+
+import './artical.styl'
 
 
 class Artical extends Component {
@@ -38,6 +40,7 @@ class Artical extends Component {
 
 
                 <Modal
+                    style={{ height: 600}}
                     title={data.name + ":"}
                     visible={this.state.visible}
                     onOk={this.handleCancel}
@@ -53,30 +56,37 @@ class Artical extends Component {
                 >
                     <p>{data.content}</p>
 
-                    <p style={{marginTop:20,color:'rgb(0,33,64)'}}>精彩评论：</p>
 
-                    {
-                        data.commments.map((item, index) => {
-                            return (
-                                <Comment
-                                    key={index}
-                                    author={item.name}
-                                    avatar={
-                                        <Avatar
-                                            src={item.avatar}
-                                            alt={item.name}
-                                        />
-                                    }
-                                    content={
-                                        <p>
-                                            {item.content}
-                                        </p>
-                                    }
-                                >
-                                </Comment>
-                            )
-                        })
-                    }
+
+                    <div className="main">
+                        <p style={{ color: 'rgb(0,33,64)' }}>精彩评论：</p>
+                        {
+                            data.commments.map((item, index) => {
+                                return (
+                                    <Comment
+                                        key={index}
+                                        author={item.name}
+                                        avatar={
+                                            <Avatar
+                                                src={item.avatar}
+                                                alt={item.name}
+                                            />
+                                        }
+                                        content={
+                                            <p>
+                                                {item.content}
+                                            </p>
+                                        }
+                                    >
+                                    </Comment>
+                                )
+                            })
+                        }
+                    </div>
+
+                    <Form.Item label="我要评论">
+                        <Input.TextArea id="intr" autosize={{ minRows: 4, maxRows: 6 }} />
+                    </Form.Item>
 
                 </Modal>
 

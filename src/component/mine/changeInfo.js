@@ -182,12 +182,6 @@ class ChangeInfo extends Component {
         // 用户修改了信息，可以向后台提交信息
         data.username = JSON.parse(localStorage.getItem("user")).username
 
-
-        // let data = {
-        //     avatar: this.state.imageUrl,
-        //     username: JSON.parse(localStorage.getItem("user")).username
-        // }
-        // console.log(data)
         Axios.post("http://127.0.0.1:4000/update", data)
             .then((result) => {
                 // 如果返回了头像的路径 改变localStorage中的值
