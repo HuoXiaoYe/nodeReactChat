@@ -100,7 +100,8 @@ class Artical extends Component {
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            data: nextProps.data
+            data: nextProps.data,
+            comments : nextProps.data.commments
         })
     }
     getTime(time) {
