@@ -50,7 +50,7 @@ class xiaoye_db {
 			})
 		})
 	}
-	update(collectionName, json1, json2, callback){ // 更新函数
+	update(collectionName, json1, json2, callback,isPush){ // 更新函数
 		this._connect((err,db)=>{
 			if(err) return console.log("数据库连接失败")
 			let dbase = db.db(this.databaseName)

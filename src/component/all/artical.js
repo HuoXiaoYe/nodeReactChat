@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Comment, Avatar, Modal, Button, Input, Form } from 'antd';
+import { Comment, Avatar, Modal, Button, Input, Form, message } from 'antd';
 import moment from 'moment';
 
 import './artical.styl'
@@ -40,7 +40,7 @@ class Artical extends Component {
 
 
                 <Modal
-                    style={{ height: 600}}
+                    style={{ height: 600 }}
                     title={data.name + ":"}
                     visible={this.state.visible}
                     onOk={this.handleCancel}
@@ -56,7 +56,7 @@ class Artical extends Component {
                 >
                     <p>{data.content}</p>
 
-
+                    <p>{data._id}</p>
 
                     <div className="main">
                         <p style={{ color: 'rgb(0,33,64)' }}>精彩评论：</p>
@@ -85,9 +85,9 @@ class Artical extends Component {
                     </div>
 
                     <Form.Item label="我要评论">
-                        <Input.TextArea id="intr" autosize={{ minRows: 4, maxRows: 6 }} />
+                        <Input.TextArea id="commit" autosize={{ minRows: 4, maxRows: 6 }} />
+                        <Button onClick={this.sendCommit} style={{ marginTop: 15 }}>发表评论</Button>
                     </Form.Item>
-
                 </Modal>
 
 
@@ -127,7 +127,23 @@ class Artical extends Component {
         this.setState({
             visible: false
         })
-    };
+    }
+    sendCommit() {
+        let content = document.getElementById("commit").value;
+        // console.log(comment)
+        if (!content) { // 评论内容为空
+            return message.error('请书写您的评论')
+        }
+        let userInfo = JSON.parse(localStorage.getItem("user"))
+        console.log(userInfo)
+        let data = { // 定义传递给后台的数据
+            name: userInfo.username,
+            avatar: userInfo.avatar,
+            datetime: new Date(),
+            content
+        }
+
+    }
 }
 
 export default Artical;
