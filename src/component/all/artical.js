@@ -14,10 +14,12 @@ class Artical extends Component {
         this.state = {
             data: this.props.data,
             visible: false,
+            comments : this.props.data.commments
         }
     }
     render() {
         let data = this.state.data;
+        let comments = this.state.comments
         return (
             <div style={{ padding: '0 100px', lineHeight: '20px' }} >
                 <Comment onClick={this.showModal}
@@ -63,7 +65,7 @@ class Artical extends Component {
                     <div className="main">
                         <p style={{ color: 'rgb(0,33,64)' }}>精彩评论：</p>
                         {
-                            data.commments.map((item, index) => {
+                            comments.map((item, index) => {
                                 return (
                                     <Comment
                                         key={index}
@@ -91,10 +93,6 @@ class Artical extends Component {
                         <Button onClick={this.sendCommit} style={{ marginTop: 15 }}>发表评论</Button>
                     </Form.Item>
                 </Modal>
-
-
-
-
             </div>
         );
     }
@@ -130,24 +128,34 @@ class Artical extends Component {
             visible: false
         })
     }
-    sendCommit=()=> {
+    sendCommit = () => {
         let content = document.getElementById("commit").value;
-        // console.log(comment)
         console.log(content)
         if (!content) { // 评论内容为空
             return message.error('请书写您的评论')
         }
         let userInfo = JSON.parse(localStorage.getItem("user"))
-        // console.log(userInfo)
-        let data = { // 定义传递给后台的数据
-            id : this.state.data._id,
+        let data = { // 定义传递给后台的数据 无id
             name: userInfo.username,
             avatar: userInfo.avatar,
             datetime: new Date(),
             content
         }
-        axios.post("http://127.0.0.1:4000/updatecomment",data).then((response)=>{
-            console.log(response)
+        // console.log(data)
+        axios.post("http://127.0.0.1:4000/updatecomment", {
+            id: this.state.data._id,
+            ...data
+        }).then((response) => {
+            if (response.data.result === "1") {
+                message.success('评论发表成功')
+            }
+            // 假数据
+            let newComments = this.state.comments
+            newComments.push(data)
+            this.setState({
+                comments : newComments
+            })
+
         })
 
 

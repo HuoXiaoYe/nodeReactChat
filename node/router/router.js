@@ -2,6 +2,7 @@
 const path = require("path")
 const fs = require("fs")
 const xiaoye_db = require("../dao/dbase.js")
+const ObjectId = require('mongodb').ObjectID;
 
 
 
@@ -141,18 +142,26 @@ exports.updateComment = (req, res) => {
     req.on("end", () => {
         let dataObj = JSON.parse(datastr.toString())
         // console.log(dataObj)
-        let json1 = {"_id" : `ObjectId("${dataObj.id}")`}
+        let json1 = { "_id": ObjectId(dataObj.id) }
         let json2 = {
-            "name": dataObj.username,
+            "name": dataObj.name,
             "avatar": dataObj.avatar,
             "datetime": dataObj.datetime,
             "content": dataObj.content
         }
 
+        // 怎么通过 id
+        // xiaoye.find("artical", json1, (err, result) => {
+        //     console.log(result)
+        //     res.send(result)
+        //     res.end()
+        // })
         xiaoye.update("artical", json1, json2, (err, result) => {
             if (err) {
+                console.log(err)
                 return res.end("-1")
             }
+            console.log(result)
             res.send({
                 "result": "1"
             })

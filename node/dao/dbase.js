@@ -95,7 +95,7 @@ class xiaoye_db {
 		this._connect((err, db) => {
 			if (err) return console.log("数据库连接失败")
 			let dbase = db.db(this.databaseName)
-			dbase.collection(collectionName).count({}).then((count) => {
+			dbase.collection(collectionName).countDocuments({}).then((count) => {
 				callback && callback(count);
 			});
 		})
