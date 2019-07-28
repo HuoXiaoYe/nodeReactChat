@@ -14,14 +14,15 @@ class Artical extends Component {
         this.state = {
             data: this.props.data,
             visible: false,
-            comments : this.props.data.commments
+            comments: this.props.data.commments,
+            commentValue: ""
         }
     }
     render() {
         let data = this.state.data;
         let comments = this.state.comments
         return (
-            <div style={{ padding: '0 100px', lineHeight: '20px' }} >
+            <div style={{ padding: '0 100px', lineHeight: '20px' }}>
                 <Comment onClick={this.showModal}
                     author={data.name}
                     avatar={
@@ -44,6 +45,7 @@ class Artical extends Component {
 
 
                 <Modal
+                    ref="ModalContainer"
                     style={{ height: 600 }}
                     title={data.name + ":"}
                     visible={this.state.visible}
@@ -60,7 +62,7 @@ class Artical extends Component {
                 >
                     <p>{data.content}</p>
 
-                    <p>{data._id}</p>
+                    {/* <p>{data._id}</p> */}
 
                     <div className="main">
                         <p style={{ color: 'rgb(0,33,64)' }}>精彩评论：</p>
@@ -89,7 +91,7 @@ class Artical extends Component {
                     </div>
 
                     <Form.Item label="我要评论">
-                        <Input.TextArea id="commit" autosize={{ minRows: 4, maxRows: 6 }} />
+                        <Input.TextArea value={this.state.commentValue} onChange={this.changeValue} ref="content" autosize={{ minRows: 4, maxRows: 6 }} />
                         <Button onClick={this.sendCommit} style={{ marginTop: 15 }}>发表评论</Button>
                     </Form.Item>
                 </Modal>
@@ -128,9 +130,14 @@ class Artical extends Component {
             visible: false
         })
     }
+    changeValue = (e) => {
+        this.setState({
+            commentValue: e.target.value
+        })
+    }
     sendCommit = () => {
-        let content = document.getElementById("commit").value;
-        console.log(content)
+        console.log(this.state.commentValue)
+        let content = this.state.commentValue
         if (!content) { // 评论内容为空
             return message.error('请书写您的评论')
         }
@@ -156,8 +163,14 @@ class Artical extends Component {
                 comments : newComments
             })
 
+            // 清空评论框
+            this.setState({
+                commentValue: ""
+            })
+
         })
 
+        
 
 
     }
