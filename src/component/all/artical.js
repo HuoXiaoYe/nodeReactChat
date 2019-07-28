@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Comment, Avatar, Modal, Button, Input, Form, message } from 'antd';
 import moment from 'moment';
 
+import axios from 'axios'
+
 import './artical.styl'
 
 
@@ -128,20 +130,27 @@ class Artical extends Component {
             visible: false
         })
     }
-    sendCommit() {
+    sendCommit=()=> {
         let content = document.getElementById("commit").value;
         // console.log(comment)
+        console.log(content)
         if (!content) { // 评论内容为空
             return message.error('请书写您的评论')
         }
         let userInfo = JSON.parse(localStorage.getItem("user"))
-        console.log(userInfo)
+        // console.log(userInfo)
         let data = { // 定义传递给后台的数据
+            id : this.state.data._id,
             name: userInfo.username,
             avatar: userInfo.avatar,
             datetime: new Date(),
             content
         }
+        axios.post("http://127.0.0.1:4000/updatecomment",data).then((response)=>{
+            console.log(response)
+        })
+
+
 
     }
 }

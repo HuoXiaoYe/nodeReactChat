@@ -23,5 +23,6 @@ app.get("/getartical",router.getArtical)
 app.get("/getallcount/:collextionname",router.getAllCount)
 app.get("/userinfo/:username",router.getUserInfo)
 app.post("/update",router.update)
+app.post("/updatecomment",router.updateComment)
 
 app.listen(4000)

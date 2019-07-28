@@ -39,8 +39,8 @@ class xiaoye_db {
 				var limitNumber = 0;
 				var sortObj = {};
 			} else {
-				var skipAmount = parseInt(args.pageSize)  *  parseInt(args.page) || 0;
-				var limitNumber =  parseInt(args.pageSize) || 0;
+				var skipAmount = parseInt(args.pageSize) * parseInt(args.page) || 0;
+				var limitNumber = parseInt(args.pageSize) || 0;
 				var sortObj = args.sort || {};
 			}
 			let dbase = db.db(this.databaseName)
@@ -50,31 +50,53 @@ class xiaoye_db {
 			})
 		})
 	}
-	update(collectionName, json1, json2, callback,isPush){ // 更新函数
-		this._connect((err,db)=>{
-			if(err) return console.log("数据库连接失败")
+	update(collectionName, json1, json2, callback, isPush) { // 更新函数
+		this._connect((err, db) => {
+			if (err) return console.log("数据库连接失败")
 			let dbase = db.db(this.databaseName)
-			dbase.collection(collectionName).updateMany(json1,{$set:json2},(err,result)=>{
-				callback&&callback(err,result)
+			if (!isPush) {
+				dbase.collection(collectionName).updateMany(json1, { $set: json2 }, (err, result) => {
+					callback && callback(err, result)
+				})
+			} else if (isPush) {
+				console.log(111111111)
+				dbase.collection(collectionName).updateMany(json1, { $push: { "commments": { $each: [json2] } } }, (err, result) => {
+					console.log(22222222)
+					callback && callback(err, result)
+				})
+			}
+		})
+	}
+	removeData(collectionName, json, callback) { // 删除函数
+		this._connect((err, db) => {
+			if (err) return console.log("数据库连接失败")
+			let dbase = db.db(this.databaseName)
+			dbase.collection(collectionName).deleteMany(json, (err, result) => {
+				callback && callback(err, result)
 			})
 		})
 	}
-	removeData(collectionName, json, callback){ // 删除函数
-		this._connect((err,db)=>{
-			if(err) return console.log("数据库连接失败")
-			let dbase = db.db(this.databaseName)
-			dbase.collection(collectionName).deleteMany(json,(err,result)=>{
-				callback&&callback(err,result)
-			})
-		})
-	}
+
+	// getAllCount(collectionName, callback) { // 获取所有个数
+	// 	this._connect((err, db) => {
+	// 		if (err) return console.log("数据库连接失败")
+	// 		let dbase = db.db(this.databaseName)
+	// 		dbase.collection(collectionName).count({}).then((count) => {
+	// 			callback && callback(count);
+	// 		});
+	// 	})
+
+
+
+
+	// }
 
 	getAllCount(collectionName, callback) { // 获取所有个数
 		this._connect((err, db) => {
 			if (err) return console.log("数据库连接失败")
 			let dbase = db.db(this.databaseName)
 			dbase.collection(collectionName).count({}).then((count) => {
-				callback&&callback(count);
+				callback && callback(count);
 			});
 		})
 	}

@@ -121,7 +121,7 @@ exports.update = (req, res) => {
                     return res.end("-1")
                 }
                 res.send({
-                    "result" : "1"
+                    "result": "1"
                 })
                 res.end()
             })
@@ -130,6 +130,35 @@ exports.update = (req, res) => {
 
 
 
+}
+
+exports.updateComment = (req, res) => {
+    let datastr = ""
+    req.on("data", (chunk) => {
+        datastr += chunk
+    })
+
+    req.on("end", () => {
+        let dataObj = JSON.parse(datastr.toString())
+        // console.log(dataObj)
+        let json1 = {"_id" : `ObjectId("${dataObj.id}")`}
+        let json2 = {
+            "name": dataObj.username,
+            "avatar": dataObj.avatar,
+            "datetime": dataObj.datetime,
+            "content": dataObj.content
+        }
+
+        xiaoye.update("artical", json1, json2, (err, result) => {
+            if (err) {
+                return res.end("-1")
+            }
+            res.send({
+                "result": "1"
+            })
+            res.end()
+        },true)
+    })
 }
 
 
