@@ -43,8 +43,8 @@ class My extends Component {
                         bordered
                         dataSource={myList}
                         renderItem={item => (
-                            <List.Item>
-                                <Typography.Text mark>[ITEM]</Typography.Text> {item}
+                            <List.Item style={{height:"36px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+                                {item.content}
                             </List.Item>
                         )}
                     />
@@ -63,7 +63,7 @@ class My extends Component {
         let username = JSON.parse(localStorage.getItem("user")).username;
         // console.log(username)
         axios.get(`http://127.0.0.1:4000/getmylist/${username}`).then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
             // 更改状态
             this.setState({
                 myList: response.data,
@@ -88,8 +88,21 @@ class My extends Component {
             agree: 0
         }
         // console.log(data)
-        axios.post("http://127.0.0.1:4000/additem", data).then((response)=>{
-            console.log(response)
+
+
+        axios.post("http://127.0.0.1:4000/additem", data).then((response) => {
+            // console.log(response)
+            if(response.data.result === "1"){
+                message.success("说说发表成功");
+
+                let allList = this.state.myList;
+                allList.unshift(data);
+
+                this.setState({
+                    myList : allList
+                })
+                document.getElementById("content").value = "";
+            }
         })
     }
 }

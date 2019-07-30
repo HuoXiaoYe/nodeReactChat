@@ -11,7 +11,7 @@ let xiaoye = new xiaoye_db('mongodb://localhost:27017', 'chat')
 
 
 
-exports.doLogin = (req, res) => {
+exports.doLogin = (req, res) => { // 登陆处理
     let namePassword = ""
     req.on("data", (chunk) => {
         namePassword += chunk;
@@ -33,7 +33,7 @@ exports.doLogin = (req, res) => {
     })
 }
 
-exports.doRegist = (req, res) => {
+exports.doRegist = (req, res) => { // 注册处理
     let namePassword = ""
     req.on("data", (chunk) => {
         namePassword += chunk;
@@ -63,9 +63,9 @@ exports.doRegist = (req, res) => {
 
 
 
-exports.getArtical = (req, res) => {
+exports.getArtical = (req, res) => { // 获取所有说说列表
     let queryObj = req.query
-    xiaoye.find("artical", {}, { pageSize: queryObj.pageSize, page: queryObj.page, sort: { 'datetime': -1 } }, (err, result) => {
+    xiaoye.find("artical", {}, { pageSize: queryObj.pageSize, page: queryObj.page, sort: { 'datetime': 1 } }, (err, result) => {
         res.json(result)
         res.end()
         return
@@ -170,25 +170,12 @@ exports.updateComment = (req, res) => {
 
 exports.getMyList = (req,res)=>{
     // 根据 username 查找对应的文章说说
-    xiaoye.find("artical",{username:req.params.username},(err,result)=>{
+    xiaoye.find("artical",{name:req.params.username},{sort: { 'datetime': 1 }},(err,result)=>{
         res.json(result);
         res.end();
     })
 }
 
-exports.addShuoShuo = (req,res)=>{
-    // let datastr = ""
-    // req.on("data", (chunk) => {
-    //     datastr += chunk
-    //     console.log(2222222222)
-    // })
-    // req.on("end",()=>{
-    //     let dataObj = JSON.parse(datastr.toString());
-    //     console.log(dataObj)
-    //     res.end("adsf")
-    // })
-    console.log("接受到了相应")
-}
 
 exports.addItem = (req,res)=>{
     let dataStr = "";
