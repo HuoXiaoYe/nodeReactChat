@@ -158,10 +158,8 @@ exports.updateComment = (req, res) => {
         // })
         xiaoye.update("artical", json1, json2, (err, result) => {
             if (err) {
-                console.log(err)
                 return res.end("-1")
             }
-            console.log(result)
             res.send({
                 "result": "1"
             })
@@ -175,6 +173,43 @@ exports.getMyList = (req,res)=>{
     xiaoye.find("artical",{username:req.params.username},(err,result)=>{
         res.json(result);
         res.end();
+    })
+}
+
+exports.addShuoShuo = (req,res)=>{
+    // let datastr = ""
+    // req.on("data", (chunk) => {
+    //     datastr += chunk
+    //     console.log(2222222222)
+    // })
+    // req.on("end",()=>{
+    //     let dataObj = JSON.parse(datastr.toString());
+    //     console.log(dataObj)
+    //     res.end("adsf")
+    // })
+    console.log("接受到了相应")
+}
+
+exports.addItem = (req,res)=>{
+    let dataStr = "";
+    req.on("data",(chunk)=>{
+        dataStr += chunk
+    })
+    req.on("end",()=>{
+        // insert(collectionName, json, callback)
+        let dataObj = JSON.parse(dataStr.toString())
+        // console.log(dataObj)
+        let name = dataObj.name;
+        xiaoye.insert("artical",dataObj,(err,result)=>{
+            if(err){
+                res.json({"result":"-1"})
+                res.end();
+                return;
+            }
+            res.json({"result":"1"})
+            res.end();
+        })
+
     })
 }
 

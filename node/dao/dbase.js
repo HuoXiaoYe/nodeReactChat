@@ -59,9 +59,7 @@ class xiaoye_db {
 					callback && callback(err, result)
 				})
 			} else if (isPush) {
-				console.log(111111111)
 				dbase.collection(collectionName).updateMany(json1, { $push: { "commments": { $each: [json2] } } }, (err, result) => {
-					console.log(22222222)
 					callback && callback(err, result)
 				})
 			}
