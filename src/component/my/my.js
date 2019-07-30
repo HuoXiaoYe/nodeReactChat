@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import { Input, Form, List, Typography, Spin } from 'antd';
+import { Input, Form, List, Typography } from 'antd';
 
 import "./my.styl"
+import axios from 'axios';
 
 
 const data = []
@@ -11,10 +12,12 @@ class My extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myList: []
+            myList: [],
+            loading: true
         }
     }
     render() {
+        let {myList,loading} = this.state;
         return (
             <div className="my-container" style={{ padding: 30, width: "60%" }}>
                 {/* 头部发表说说页面 */}
@@ -33,7 +36,7 @@ class My extends Component {
 
                         <List
                         style={{height:400}}
-                            loading={true}
+                            loading={loading}
                             header={<div>我的说说</div>}
                             bordered
                             dataSource={data}
@@ -57,7 +60,14 @@ class My extends Component {
     getMyList = () => { // 得到自己的动态
         let username = JSON.parse(localStorage.getItem("user")).username;
         // console.log(username)
-        
+        axios.get(`http://127.0.0.1:4000/getmylist/${username}`).then((response)=>{
+            // console.log(response.data);
+            // 更改状态
+            this.setState({
+                myList: response.data,
+                loading: false
+            })
+        })
 
     }
 }

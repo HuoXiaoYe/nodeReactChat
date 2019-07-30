@@ -170,6 +170,14 @@ exports.updateComment = (req, res) => {
     })
 }
 
+exports.getMyList = (req,res)=>{
+    // 根据 username 查找对应的文章说说
+    xiaoye.find("artical",{username:req.params.username},(err,result)=>{
+        res.json(result);
+        res.end();
+    })
+}
+
 
 
 
