@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { Input, Form, List, Typography } from 'antd';
+import { Input, Form, List, Typography, Spin } from 'antd';
 
-const { TextArea } = Input;
+import "./my.styl"
 
 
 const data = []
@@ -27,22 +27,38 @@ class My extends Component {
                 </div>
                 {/* 呈现个人说说页面 */}
                 <div className="list">
-                    <List
-                        header={<div>我的说说</div>}
-                        bordered
-                        dataSource={data}
-                        renderItem={item => (
-                            <List.Item>
-                                <Typography.Text mark>[ITEM]</Typography.Text> {item}
-                            </List.Item>
-                        )}
-                    />
+
+
+                    {/* <Spin> */}
+
+                        <List
+                        style={{height:400}}
+                            loading={true}
+                            header={<div>我的说说</div>}
+                            bordered
+                            dataSource={data}
+                            renderItem={item => (
+                                <List.Item>
+                                    <Typography.Text mark>[ITEM]</Typography.Text> {item}
+                                </List.Item>
+                            )}
+                        />
+                    {/* </Spin> */}
 
 
                 </div>
 
             </div>
         );
+    }
+    componentDidMount() {
+        this.getMyList()
+    }
+    getMyList = () => { // 得到自己的动态
+        let username = JSON.parse(localStorage.getItem("user")).username;
+        // console.log(username)
+        
+
     }
 }
 
