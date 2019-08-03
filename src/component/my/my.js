@@ -21,13 +21,14 @@ class My extends Component {
             dataLoading: false,
             hasMore: true,
             comments: [],
-            visible: false
+            visible: false,
+            lookData: {} // 当前要查看那条说说
+
         }
     }
     render() {
         let { myList, loading } = this.state;
-        let data = this.state.myList[0] || {
-        };
+        let data = this.state.lookData;
         let comments = this.state.comments
         return (
             <div className="my-container" style={{ margin: 30, width: "60%" }}>
@@ -55,7 +56,7 @@ class My extends Component {
                             <List
                                 dataSource={myList}
                                 renderItem={(item,index) => (
-                                    <List.Item key={item.id} onClick={this.handleClick.bind(this,index)}>
+                                    <List.Item key={item.id} style={{cursor:"pointer"}} onClick={this.handleClick.bind(this,index)}>
                                         <List.Item.Meta avatar={<Avatar src={item.avatar} />} />
                                         <div>{item.content}</div>
                                     </List.Item>
@@ -124,6 +125,8 @@ class My extends Component {
         console.log(index);
         this.setState({
             visible: true,
+            comments: this.state.myListAll[index].commments,
+            lookData: this.state.myListAll[index]
         });
         return
     }
