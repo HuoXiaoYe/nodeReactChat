@@ -49,14 +49,6 @@ class My extends Component {
                             </List.Item>
                         )}
                     /> */}
-
-
-
-
-
-
-
-
                     <div className="demo-infinite-container">
                         <InfiniteScroll
                             initialLoad={false}
@@ -82,27 +74,10 @@ class My extends Component {
                             </List>
                         </InfiniteScroll>
                     </div>
-
-
-
-
-
                 </div>
-
-
             </div>
         );
     }
-
-
-
-
-
-
-
-
-
-
     // 处理加载更多
     handleInfiniteOnLoad = () => {
         this.setState({
@@ -133,16 +108,9 @@ class My extends Component {
 
     componentDidMount() {
         this.getMyList()
-        // this.getMyListCount()
     }
-    // getMyListCount= () => {
-    //     axios.get(`http://127.0.0.1:4000/getmylistcount/${username}`).then((response)=>{
-    //         console.log(response)
-    //     })
-    // }
     getMyList = () => { // 得到自己的动态
         let username = JSON.parse(localStorage.getItem("user")).username;
-        // console.log(username)
         axios.get(`http://127.0.0.1:4000/getmylist/${username}`).then((response) => {
             console.log(response.data);
             // 更改状态
