@@ -22,7 +22,8 @@ class My extends Component {
             hasMore: true,
             comments: [],
             visible: false,
-            lookData: {} // 当前要查看那条说说
+            lookData: {}, // 当前要查看那条说说
+            commentValue : "",
 
         }
     }
@@ -55,8 +56,8 @@ class My extends Component {
                         >
                             <List
                                 dataSource={myList}
-                                renderItem={(item,index) => (
-                                    <List.Item key={item.id} style={{cursor:"pointer"}} onClick={this.handleClick.bind(this,index)}>
+                                renderItem={(item, index) => (
+                                    <List.Item key={item.id} style={{ cursor: "pointer" }} onClick={this.handleClick.bind(this, index)}>
                                         <List.Item.Meta avatar={<Avatar src={item.avatar} />} />
                                         <div>{item.content}</div>
                                     </List.Item>
@@ -116,10 +117,66 @@ class My extends Component {
                             })
                         }
                     </div>
+                    <Form.Item label="我要评论">
+                        <Input.TextArea value={this.state.commentValue} onChange={this.changeValue} ref="content" autosize={{ minRows: 4, maxRows: 6 }} />
+                        <Button onClick={this.sendCommit} style={{ marginTop: 15 }}>发表评论</Button>
+                    </Form.Item>
                 </Modal>
+
             </div>
         );
     }
+
+
+
+    // 对自己的说说 进行评论
+    changeValue = (e) => {
+        this.setState({
+            commentValue: e.target.value
+        })
+    }
+    // 对自己的说说 进行评论
+    sendCommit = () => {
+        console.log(this.state.commentValue)
+        let content = this.state.commentValue
+        if (!content) { // 评论内容为空
+            return message.error('请书写您的评论')
+        }
+        let userInfo = JSON.parse(localStorage.getItem("user"))
+        let data = { // 定义传递给后台的数据 无id
+            name: userInfo.username,
+            avatar: userInfo.avatar,
+            datetime: new Date(),
+            content
+        }
+        // console.log(data)
+        axios.post("http://127.0.0.1:4000/updatecomment", {
+            id: this.state.lookData._id,
+            ...data
+        }).then((response) => {
+            if (response.data.result === "1") {
+                message.success('评论发表成功')
+            }
+            // 假数据
+            let newComments = this.state.comments
+            newComments.push(data)
+            this.setState({
+                comments: newComments
+            })
+
+            // 清空评论框
+            this.setState({
+                commentValue: ""
+            })
+
+        })
+
+
+
+
+    }
+
+
     // 点击说说 查看评论
     handleClick = (index) => {
         console.log(index);
