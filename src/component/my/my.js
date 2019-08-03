@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { Input, Form, List, Typography, Button, message } from 'antd';
+import { Input, Form, List, Button, message, Avatar, Spin } from 'antd';
+
+import InfiniteScroll from 'react-infinite-scroller';
 
 import "./my.styl"
 import axios from 'axios';
@@ -12,7 +14,9 @@ class My extends Component {
         super(props);
         this.state = {
             myList: [],
-            loading: true
+            loading: true,
+            dataLoading: false,
+            hasMore: true,
         }
     }
     render() {
@@ -32,7 +36,7 @@ class My extends Component {
                 </div>
                 {/* 呈现个人说说页面 */}
                 <div className="list">
-                    <List
+                    {/* <List
                         style={{ height: 400 }}
                         loading={loading}
                         header={<div>我的说说</div>}
@@ -43,12 +47,123 @@ class My extends Component {
                                 {item.content}
                             </List.Item>
                         )}
-                    />
+                    /> */}
+
+
+
+
+
+
+
+
+                    <div className="demo-infinite-container">
+                        <InfiniteScroll
+                            initialLoad={false}
+                            pageStart={0}
+                            loadMore={this.handleInfiniteOnLoad}
+                            hasMore={!this.state.loading && this.state.hasMore}
+                            useWindow={false}
+                        >
+                            <List
+                                dataSource={myList}
+                                renderItem={item => (
+                                    <List.Item key={item.id}>
+                                        <List.Item.Meta avatar={<Avatar src={item.avatar} />} />
+                                        <div>{item.content}</div>
+                                    </List.Item>
+                                )}
+                            >
+                                {this.state.dataLoading && this.state.hasMore && (
+                                    <div className="demo-loading-container">
+                                    </div>
+                                )}
+                            </List>
+                        </InfiniteScroll>
+                    </div>
+
+
+
+
+
                 </div>
+
 
             </div>
         );
     }
+
+
+
+
+
+
+
+
+
+    // componentDidMount() {
+    //     this.fetchData(res => {
+    //         this.setState({
+    //             data: res.results,
+    //         });
+    //     });
+    // }
+
+    // fetchData = callback => {
+    //     reqwest({
+    //         url: fakeDataUrl,
+    //         type: 'json',
+    //         method: 'get',
+    //         contentType: 'application/json',
+    //         success: res => {
+    //             callback(res);
+    //         },
+    //     });
+    // };
+
+    handleInfiniteOnLoad = () => {
+        let { myList } = this.state;
+        this.setState({
+            dataLoading: true,
+        });
+        if (myList.length > 14) {
+            message.warning('Infinite List loaded all');
+            this.setState({
+                hasMore: false,
+                dataLoading: false,
+            });
+            return;
+        }
+        // this.fetchData(res => {
+        //     myList = myList.concat(res.results);
+        //     this.setState({
+        //         myList,
+        //         dataLoading: false,
+        //     });
+        // });
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     componentDidMount() {
         this.getMyList()
     }
@@ -62,6 +177,8 @@ class My extends Component {
                 myList: response.data,
                 loading: false
             })
+
+            console.log(response.data)
         })
 
     }
@@ -85,14 +202,14 @@ class My extends Component {
 
         axios.post("http://127.0.0.1:4000/additem", data).then((response) => {
             // console.log(response)
-            if(response.data.result === "1"){
+            if (response.data.result === "1") {
                 message.success("说说发表成功");
 
                 let allList = this.state.myList;
                 allList.unshift(data);
 
                 this.setState({
-                    myList : allList
+                    myList: allList
                 })
                 document.getElementById("content").value = "";
             }

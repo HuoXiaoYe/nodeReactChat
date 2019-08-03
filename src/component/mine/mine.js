@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Spin } from 'antd';
+import { Button, Spin} from 'antd';
+// import InfiniteScroll from 'react-infinite-scroller'
 import './mine.styl'
 import axios from 'axios';
 
@@ -10,7 +11,7 @@ class Mine extends Component {
         super(props);
         this.state = {
             userInfo: {},
-            loading: true
+            loading: true,
         }
     }
     render() {
