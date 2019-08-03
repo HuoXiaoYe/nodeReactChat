@@ -28,8 +28,7 @@ class Mine extends Component {
                     </Link>
                 </div>
 
-                <Spin spinning={this.state.loading}>
-
+                <Spin spinning={this.state.loading} style={{position:"static"}}>
                     <ul className="main" style={{visibility: this.state.loading ? "hidden" : "visible"}}>
                         <li className="item">
                             <ul>
@@ -42,9 +41,6 @@ class Mine extends Component {
                                 <li>
                                     邮箱:&nbsp;&nbsp;&nbsp;&nbsp;{email || '未设置'}
                                 </li>
-                                {/* <li>
-                                性别:&nbsp;&nbsp;&nbsp;&nbsp;{gender || '未设置'}
-                            </li> */}
                             </ul>
                         </li>
                         <li className="item">

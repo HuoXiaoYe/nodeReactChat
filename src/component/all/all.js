@@ -34,17 +34,17 @@ class All extends Component {
                 </div>
                 <div className="main" style={{ paddingTop: '30px', position: "relative" }}>
 
+                    <Spin spinning={this.state.showLoading} style={{ position: "static" }}>
+                        <div className="all-artical" style={{ height: 444, }}>
 
-                    <div className="all-artical" style={{ height: 444,}}>
-                        <Spin spinning={this.state.showLoading}>
                             {
                                 articalList.map((item, index) => {
                                     return <Artical data={item} key={index} />
                                 })
                             }
-                        </Spin>
-                    </div>
 
+                        </div>
+                    </Spin>
                     <div className="pagination" style={{ 'position': 'fixed', 'bottom': '65px', 'left': '340px' }}>
                         <Pagination total={this.state.allCount} defaultPageSize={6} onChange={this.onChange} />
                     </div>
