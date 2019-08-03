@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
-import { Input, Form, List, Button, message, Avatar, Spin } from 'antd';
+import {
+    Input, Form, List, Button, message, Avatar, Spin,
+    Comment, Modal
+} from 'antd';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -17,11 +20,15 @@ class My extends Component {
             loading: true,
             dataLoading: false,
             hasMore: true,
-            myListAll: []
+            comments: [],
+            visible: false
         }
     }
     render() {
         let { myList, loading } = this.state;
+        let data = this.state.myList[0] || {
+        };
+        let comments = this.state.comments
         return (
             <div className="my-container" style={{ margin: 30, width: "60%" }}>
                 {/* 头部发表说说页面 */}
@@ -37,18 +44,6 @@ class My extends Component {
                 </div>
                 {/* 呈现个人说说页面 */}
                 <div className="list">
-                    {/* <List
-                        style={{ height: 400 }}
-                        loading={loading}
-                        header={<div>我的说说</div>}
-                        bordered
-                        dataSource={myList}
-                        renderItem={item => (
-                            <List.Item style={{height:"36px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
-                                {item.content}
-                            </List.Item>
-                        )}
-                    /> */}
                     <div className="demo-infinite-container">
                         <InfiniteScroll
                             initialLoad={false}
@@ -59,8 +54,8 @@ class My extends Component {
                         >
                             <List
                                 dataSource={myList}
-                                renderItem={item => (
-                                    <List.Item key={item.id}>
+                                renderItem={(item,index) => (
+                                    <List.Item key={item.id} onClick={this.handleClick.bind(this,index)}>
                                         <List.Item.Meta avatar={<Avatar src={item.avatar} />} />
                                         <div>{item.content}</div>
                                     </List.Item>
@@ -75,8 +70,75 @@ class My extends Component {
                         </InfiniteScroll>
                     </div>
                 </div>
+
+                {/* 评论框 */}
+                <Modal
+                    ref="ModalContainer"
+                    style={{ height: 600 }}
+                    title={data.name + ":"}
+                    visible={this.state.visible}
+                    onOk={this.handleCancel}
+                    onCancel={this.handleCancel}
+                    okText="朕已阅"
+                    cancelText='取消'
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleCancel}>
+                            朕已阅
+                        </Button>,
+                    ]}
+
+                >
+                    <p>{data.content}</p>
+
+                    <div className="main">
+                        <p style={{ color: 'rgb(0,33,64)' }}>精彩评论：</p>
+                        {
+                            comments.map((item, index) => {
+                                return (
+                                    <Comment
+                                        key={index}
+                                        author={item.name}
+                                        avatar={
+                                            <Avatar
+                                                src={item.avatar}
+                                                alt={item.name}
+                                            />
+                                        }
+                                        content={
+                                            <p>
+                                                {item.content}
+                                            </p>
+                                        }
+                                    >
+                                    </Comment>
+                                )
+                            })
+                        }
+                    </div>
+                </Modal>
             </div>
         );
+    }
+    // 点击说说 查看评论
+    handleClick = (index) => {
+        console.log(index);
+        this.setState({
+            visible: true,
+        });
+        return
+    }
+    hidemodal = () => {
+        console.log(222)
+        this.setState({
+            visible: false,
+        });
+        return
+    }
+
+    handleCancel = e => {
+        this.setState({
+            visible: false
+        })
     }
     // 处理加载更多
     handleInfiniteOnLoad = () => {
@@ -99,7 +161,7 @@ class My extends Component {
             myList = myList.concat(myListAll.slice(myList.length, endIndex))
             this.setState({
                 myList,
-                dataLoading : false
+                dataLoading: false
 
             })
             clearTimeout(timer)

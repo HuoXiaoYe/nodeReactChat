@@ -62,8 +62,6 @@ class Artical extends Component {
                 >
                     <p>{data.content}</p>
 
-                    {/* <p>{data._id}</p> */}
-
                     <div className="main">
                         <p style={{ color: 'rgb(0,33,64)' }}>精彩评论：</p>
                         {
