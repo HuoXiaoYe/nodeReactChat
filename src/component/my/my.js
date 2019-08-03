@@ -32,10 +32,6 @@ class My extends Component {
                 </div>
                 {/* 呈现个人说说页面 */}
                 <div className="list">
-
-
-                    {/* <Spin> */}
-
                     <List
                         style={{ height: 400 }}
                         loading={loading}
@@ -48,9 +44,6 @@ class My extends Component {
                             </List.Item>
                         )}
                     />
-                    {/* </Spin> */}
-
-
                 </div>
 
             </div>
