@@ -17,6 +17,7 @@ class My extends Component {
             loading: true,
             dataLoading: false,
             hasMore: true,
+            myListAll: []
         }
     }
     render() {
@@ -61,7 +62,7 @@ class My extends Component {
                             initialLoad={false}
                             pageStart={0}
                             loadMore={this.handleInfiniteOnLoad}
-                            hasMore={!this.state.loading && this.state.hasMore}
+                            hasMore={!this.state.dataLoading && this.state.hasMore}
                             useWindow={false}
                         >
                             <List
@@ -75,6 +76,7 @@ class My extends Component {
                             >
                                 {this.state.dataLoading && this.state.hasMore && (
                                     <div className="demo-loading-container">
+                                        <Spin />
                                     </div>
                                 )}
                             </List>
@@ -100,73 +102,44 @@ class My extends Component {
 
 
 
-    // componentDidMount() {
-    //     this.fetchData(res => {
-    //         this.setState({
-    //             data: res.results,
-    //         });
-    //     });
-    // }
 
-    // fetchData = callback => {
-    //     reqwest({
-    //         url: fakeDataUrl,
-    //         type: 'json',
-    //         method: 'get',
-    //         contentType: 'application/json',
-    //         success: res => {
-    //             callback(res);
-    //         },
-    //     });
-    // };
-
+    // 处理加载更多
     handleInfiniteOnLoad = () => {
-        let { myList } = this.state;
         this.setState({
             dataLoading: true,
         });
-        if (myList.length > 14) {
-            message.warning('Infinite List loaded all');
+        let timer = setTimeout(() => {
+            let { myList, myListCount, myListAll } = this.state;
+            if (myList.length >= myListCount) {
+                message.warning('已经到底了！！！');
+                this.setState({
+                    hasMore: false,
+                    dataLoading: false,
+                });
+                return;
+            }
+
+            let endIndex = myList.length <= myListAll.length - 5 ? myList.length + 5 : myListAll.length
+
+            myList = myList.concat(myListAll.slice(myList.length, endIndex))
             this.setState({
-                hasMore: false,
-                dataLoading: false,
-            });
-            return;
-        }
-        // this.fetchData(res => {
-        //     myList = myList.concat(res.results);
-        //     this.setState({
-        //         myList,
-        //         dataLoading: false,
-        //     });
-        // });
+                myList,
+                dataLoading : false
+
+            })
+            clearTimeout(timer)
+        }, 2000)
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     componentDidMount() {
         this.getMyList()
+        // this.getMyListCount()
     }
+    // getMyListCount= () => {
+    //     axios.get(`http://127.0.0.1:4000/getmylistcount/${username}`).then((response)=>{
+    //         console.log(response)
+    //     })
+    // }
     getMyList = () => { // 得到自己的动态
         let username = JSON.parse(localStorage.getItem("user")).username;
         // console.log(username)
@@ -174,8 +147,10 @@ class My extends Component {
             console.log(response.data);
             // 更改状态
             this.setState({
-                myList: response.data,
-                loading: false
+                myListAll: response.data,
+                myList: response.data.slice(0, 5),
+                loading: false,
+                myListCount: response.data.length
             })
 
             console.log(response.data)

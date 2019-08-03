@@ -26,6 +26,7 @@ app.post("/update",router.update)
 app.post("/updatecomment",router.updateComment)
 
 app.get("/getmylist/:username",router.getMyList)
+// app.get("/getmylistcount/:username",router.getMyListCount)
 
 app.post("/additem",router.addItem)
 

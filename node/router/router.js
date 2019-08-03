@@ -176,6 +176,14 @@ exports.getMyList = (req,res)=>{
     })
 }
 
+// exports.getMyListCount= (req,res)=>{
+//     // 根据 username 查找对应的文章说说的总个数
+//     xiaoye.getAllCount("artical",{name:req.params.username},{sort: { 'datetime': 1 }},(err,result)=>{
+//         res.json(result);
+//         res.end();
+//     })
+// }
+
 
 exports.addItem = (req,res)=>{
     let dataStr = "";
