@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * ~~首页分页动态渲染动态~~
 * ~~修改头像~~
 * ~~修改个人信息~~
-* 管理个人动态
+* ~~管理个人动态~~
 * ~~对动态评论~~
 * 对动态点赞
 * 查看他人信息
