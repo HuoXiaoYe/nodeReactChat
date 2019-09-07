@@ -12,6 +12,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * 点对点发送消息
 * 未完待补
 
+##
+* antd
+* axios
+* express
+* mongodb
+* stylus
+* react
+
 
 ## 效果图
 * ![效果图](./images/1.PNG)
