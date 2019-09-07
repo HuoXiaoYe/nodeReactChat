@@ -2,11 +2,7 @@ const express = require("express")
 
 
 const router = require("./router/router.js")
-
-
-
 let app = express()
-
 app.use((req,res,next)=>{ // 设置跨域请求
     res.header('Access-Control-Allow-Origin', '*'); //访问控制允许来源：所有
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); //访问控制允许报头 X-Requested-With: xhr请求

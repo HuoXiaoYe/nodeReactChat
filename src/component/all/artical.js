@@ -15,7 +15,8 @@ class Artical extends Component {
             data: this.props.data,
             visible: false,
             comments: this.props.data.commments,
-            commentValue: ""
+            commentValue: "",
+            
         }
     }
     render() {

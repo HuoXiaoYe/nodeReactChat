@@ -5,8 +5,6 @@ const xiaoye_db = require("../dao/dbase.js")
 const ObjectId = require('mongodb').ObjectID;
 
 
-
-
 let xiaoye = new xiaoye_db('mongodb://localhost:27017', 'chat')
 
 
